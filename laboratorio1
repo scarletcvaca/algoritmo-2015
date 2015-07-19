@@ -1,0 +1,139 @@
+// primer parcial.cpp : SCARLET VACA ALVAREZ.
+//
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "stdlib.h"
+
+using namespace std;
+
+#define FIL 100
+#define COL 100
+
+float promediodeladiagonal (int n ,int mat[FIL][COL]);
+float cargarmatriz (int n ,int mat[FIL][COL]);
+int mcd(int a, int b );
+void planilla (float notafinal[],int n);
+void mostrarvec(float notafinal,int n);
+
+void main()
+{
+
+   int opcion ,a, b, n , mat [FIL][COL],MCD,m; 
+   float notafinal[50],promedio;
+   do 
+   {
+      cout<<"MENU"<<endl;
+      cout<<"1.promedio de la diagonal:"<<endl;
+      cout<<"2.el mcd de un numero :"<<endl;
+      cout<<"3.planilla de notas :"<<endl;
+      cout<<"0.salir"<<endl;
+      cout<<"ingrese la opcion :";
+	  cin>>opcion;
+      switch (opcion)
+	  {
+        case 1: 
+          cout<<" ingrese el tamaño de una matriz cuadrada:" ;
+          cin>>n;
+		  promedio=promediodeladiagonal (mat,n);
+		  cout<<" el promedio es :"<<promedio;
+          break; 
+	    case 2:
+		  cout<<"ingrese el primer numero:";
+		  cin>>a;
+		  cout<<"infrese el segundo numero:";
+		  cin>>b;
+		  cout<<"el mcd de dos numero es :"<<mcd (a,b);
+		  break;
+		case 3:
+		  cout<<" ingrese el numero de estudiantes:";
+		  cin>>m;
+		  planilla (notafinal,m);
+		  mostrarvec(notafinal,m);
+		  getch();
+		 break;
+	    case 0: 
+		  cout<<"salir :";
+		  break;
+		default: cout<<"opcion invalida :";
+	  }
+   }while (opcion !=0);
+   getch();
+   system ("cls");
+   
+}
+		
+
+float promediodeladiagonal (int n ,int mat[FIL][COL])
+{
+	float promedio,suma=0;
+	cargarmatriz (n,mat);
+	for (int i=0;i<n;i++)
+		suma=suma+mat[i][i];
+	promedio=suma/n;
+	return promedio;
+	
+}
+
+void planilla (float notafinal[],int n)
+{	float np[50],pp[50],sp[50],tp[50],nf[50],nparcial[50];
+	int i,j;
+	for(i=0;i<n;i++)
+	{
+		cout<<"Ingrese nota practica: ";
+		cin>>np[i];
+		cout<<"Ingrese primer parcial: ";
+		cin>>pp[i];
+		cout<<"Ingrese segundo parcial: ";
+		cin>>sp[i];
+		cout<<"Ingrese tercer parcial: ";
+		cin>>tp[i];
+		cout<<"Ingrese nota examen final: ";
+		cin>>nf[i];
+		nparcial[i]=(pp[i]+sp[i]+tp[i])/3;
+		notafinal[i]=(np[i]*0.2)+(nparcial[i]*0.4)+(nf[i]*0.4);
+		
+	}
+}
+
+void mostrarvec(float notafinal,int n)
+{int c=1,i,j;
+	cout<<"\Planilla de Notas\n";
+	cout<<"N\tNota final"<<endl;
+	for(i=0;i<n;i++)
+	{	
+		cout<<c<<"\t"<<notafinal[i]<<endl;
+		c++;
+	}
+}
+
+
+int mcd (int a,int b);
+{
+	while (a!=b)
+	{
+		if (a>b) 
+			a=a-b;
+		if (b>a)
+			b=b-a;
+    }
+   mcd =a;
+  return (mcd)
+}
+
+void cargarmatriz (int n ,int mat[FIL][COL])
+{
+	int i,j;
+	for(i=0;i<n;i++)
+	{
+		for(j=0;j<n;j++)
+			{ cout<<"ingrese matiz["<<i<<"]["<<j<<"]":;
+		      cin>>mat[i][j];
+		}
+	}
+
+
+}
+
+
