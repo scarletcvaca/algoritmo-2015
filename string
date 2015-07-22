@@ -1,0 +1,22 @@
+// string.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+void main(){
+	int a;
+	string cad1 = "Hola";
+	string cad2 = "hola ";
+	if(cad1.compare(cad2)==0)
+		cout<<"cadenas iguales";
+	else
+		cout<<"cadenas distintas";
+	getch();
+
+}
+
