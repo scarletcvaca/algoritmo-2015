@@ -1,0 +1,54 @@
+// examen practico.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#define max 100
+
+
+using namespace std;
+
+void cargarVec(int n, int vec1[]);
+void recorrer1PosicionIzquierda(int n, int vec1[]);
+void mostrarVec(int n, int vec1[]);
+
+void main ()
+{ int n, vec [max];
+   do{
+	   cout<<"intrudusca cantidad de elemento :";
+	   cin>>n;
+
+   }while (n<0||n>100);
+   cargarVec( n,vec);
+   recorrer1PosicionIzquierda(n,vec);
+   mostrarVec(n,vec);
+   getch ();
+}
+
+
+
+void cargarVec(int n, int vec1[]){
+	int i;
+	for(i=0; i<n; i++){
+		cout<<"Introduzca elemento "<<i+1<<": ";
+		cin>>vec1[i];
+	}
+}
+void recorrer1PosicionIzquierda(int n, int vec1[]){
+	int i;
+	vec1[n]=vec1[0];
+	for(i=0; i<=n; i++){
+		vec1[i]=vec1[i+1];
+	}
+	
+}
+
+
+void mostrarVec(int n, int vec1[]){
+	int i;
+	for(i=0; i<n; i++){
+		cout<<vec1[i];
+	}
+}
+
