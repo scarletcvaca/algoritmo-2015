@@ -1,0 +1,17 @@
+void cuadratica(float a,float,float c,float &x,float &x1,float x2;float &xr, float &xi)
+{float d;
+ if(d>0)
+  {x1=(-b+sqrt(d)/(2*a);
+   x2=(-b-sqrt(d)/(2*a);
+   }else
+       {if(d=0)
+          {x=-b/(2*a);
+          }
+          else{
+               if(d==0)
+                  {xr=-b/(2*a);
+                   xi=sqrt+(-d)/(2*a);
+                  }
+              }
+       }
+}
