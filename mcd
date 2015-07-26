@@ -1,0 +1,17 @@
+#include <iostream>
+#include "stdafx.h"
+#include "conio.h"
+
+using namespace std;
+int mcd(int a,int b)
+{ while(a!=b)
+ {if(a>b)
+  {a=a-b;
+   if(b>a)
+    {b=b-a;
+    }
+  }
+}
+mcd=a;
+return mcd;
+}
