@@ -1,0 +1,109 @@
+#include "stdafx.h"
+#include "stdio.h"
+#include "conio.h"
+#include <iostream>
+#include <string>
+#define max 20
+
+using namespace std;
+
+struct tregistro
+{int codigo;
+ string nombre;
+ string apellido;
+ int telefono;
+ string direccion;
+ string fecha;
+};
+
+void crear();
+void adicionar();
+void mostrar();
+
+void main()
+{FILE*ptr;
+ tregistro reg;
+ int op;
+  do{cout<<"\nMENU REGISTRO";
+	 cout<<"\n1.-Crear registro";
+	 cout<<"\n2.-Adicionar registro";
+	 cout<<"\n3.-Mostrar registro";
+	 cout<<"\n0.-Salir";
+	 cout<<"\n";
+	 cin>>op;
+	 switch(op)
+			{
+				case 1:crear();
+					   cout<<"Se abrio su archivo exitosamente";
+					   break;
+			 
+				case 2:adicionar();
+					   break;
+
+				case 3:mostrar();
+					   break;
+
+				default:cout<<"\nOpcion invalida";
+					    break;
+			}getch();
+	}while(op!=0);
+
+}
+
+void crear()
+{FILE*ptr;
+ ptr=fopen("registro.dat","wb");
+ fclose(ptr);
+}
+
+void adicionar()
+{FILE*ptr;
+ tregistro reg;
+ int n,i;
+ cout<<"\nIngrese la cantidad de personas a registrar: ";
+ cin>>n;
+ ptr=fopen("registro.dat","ab");
+ for(i=0;i<n;i++)
+	{cout<<"\nIngrese el codigo de registro: ";
+	 cin>>reg.codigo;
+	 cout<<"\nIngrese el nombre: ";
+	 cin.ignore();
+	 getline(cin,reg.nombre);
+	 cout<<"\nIngrese el apellido: ";
+	 cin.ignore();
+	 getline(cin,reg.apellido);
+	 cout<<"\nIngrese el telefono: ";
+	 cin>>reg.telefono;
+	 cout<<"\nIngrese la direccion: ";
+	 cin.ignore();
+	 getline(cin,reg.direccion);
+	 cout<<"\nIngrese la fecha de nacimiento: ";
+	 cin.ignore();
+	 getline(cin,reg.fecha);
+	
+	 fwrite(&reg,sizeof(reg),1,ptr);
+	}
+  fclose(ptr);
+}
+
+void mostrar()
+{FILE*ptr;
+ tregistro reg;
+ ptr=fopen("registro.dat","rb");
+	 if(ptr!=NULL)
+		{fread(&reg,sizeof(reg),1,ptr);
+		 while(feof(ptr)==false)
+			{cout<<"\nCodigo: "<<reg.codigo;
+			 cout<<"\nNombre: "<<reg.nombre;
+			 cout<<"\nApellido: "<<reg.apellido;
+			 cout<<"\nTelefono: "<<reg.telefono;
+			 cout<<"\nDireccion: "<<reg.direccion;
+			 cout<<"\nFecha de nacimiento: "<<reg.fecha;
+			 cout<<"\n";
+			 fread(&reg,sizeof(reg),1,ptr);
+			}
+		 fclose(ptr);
+		}
+	 else
+		 cout<<"\nEl archivo no existe";
+}
