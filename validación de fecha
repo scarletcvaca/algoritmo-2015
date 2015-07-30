@@ -1,0 +1,104 @@
+#include "stdafx.h"
+#include "stdlib.h"
+#include <iostream>
+#include "conio.h"
+#include <string>
+
+using namespace std;
+
+
+bool ano_bisiesto(int aa);
+bool mm_valido(int mm);
+bool dd_valido(int dia[], int mm, int dd, int aa);
+bool validar_fecha(int dia[],int dd, int mm, int aa);
+bool aa_valido(int aa);
+
+int main()
+{
+    int dd,mm,aa,ddv[]={31,28,31,30,31,30,31,31,30,31,30,31};
+//    int dd1,mm1,aa1;
+    bool vf;
+    string fecha;
+    
+	do
+	{
+    cout<<"Ingresa fecha dd/mm/yyyy: ";
+//    scanf("%d/%d/%d",&dd1,&mm1,&aa1);
+//    cout<<dd1<<mm1<<aa1;
+     
+
+    getline(cin,fecha);
+    cout<<fecha;
+
+
+    dd=atoi(fecha.substr(0,2).c_str());
+    mm=atoi(fecha.substr(3,2).c_str());
+    aa=atoi(fecha.substr(6,4).c_str());
+
+
+    vf=validar_fecha(ddv,dd,mm,aa);
+
+	}
+	while(!(vf)||(fecha[2]!='/') ||  (fecha[5]!='/'));
+
+
+    if (vf)
+        cout<<"Fecha valida";
+    else
+        cout<<"Fecha invalida";
+    getch();
+    return 0;
+}
+
+
+bool ano_bisiesto(int aa)
+{
+    if ( ((aa%4==0) && (aa%100!=0)) || ((aa%400==0)&&(aa%100==0)))
+        return true;
+    else
+        return false;
+}
+bool mm_valido(int mm)
+{
+    if ((mm>=1)&&(mm<=12))
+        return true;
+    else
+        return false;
+}
+bool aa_valido(int aa)
+{
+    if ((aa>=1)&&(aa<=2014))
+        return true;
+    else
+        return false;
+}
+bool dd_valido(int dia[], int mm, int dd, int aa)
+{
+    bool z;
+    if (mm==2)
+	{
+        if (ano_bisiesto(aa))
+            if ((dd>=1) &&(dd<=29))
+                z=true;
+            else
+                if ((dd>=1) &&(dd<=dia[mm-1]))
+                    z=true;
+                else
+	               z=false;
+	}
+    else
+       if ((dd>=1) &&(dd<=dia[mm-1]))
+           z=true;
+        else
+           z=false;
+    return z;    
+
+}
+bool validar_fecha(int dia[],int dd, int mm, int aa)
+{
+   if (!(dd_valido(dia,mm,dd,aa))||!(mm_valido(mm))||!(aa_valido(aa)))
+
+       return false;
+   else
+       return true;
+}
