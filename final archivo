@@ -1,0 +1,345 @@
+// final.cpp : Defines the entry point for the console application.
+
+
+#include "stdafx.h"
+#include "conio.h"
+#include <iostream>
+#include "string"
+
+using namespace std;
+
+void crear_producto();
+void mostrar_producto();
+void adicionar_producto();
+void modificar_producto();
+void eliminar_producto();
+void crear_venta();
+void mostrar_venta();
+void adicionar_venta();
+void modificar_venta();
+void eliminar_venta();
+
+
+
+
+
+
+
+
+struct producto
+{
+
+	int id_prod;
+	int precio;
+	string descripcion;
+	char estado;
+
+};
+struct venta 
+{ 
+	int id_prod;
+    int cantidad;
+	string fecha;
+	char estado;
+};
+
+void main()
+{
+	int opcion;
+	do{
+	   cout<<"****MENU****"<<endl;
+	   cout<<"1.crear producto ";
+	   cout<<"2.mostar producto ";
+	   cout<<"3.adicionar producto ";
+	   cout<<"4.modificar producto ";
+	   cout<<"5.eliminar  producto ";
+	   cout<<"6.crear venta ";
+	   cout<<"7.mostar venta";
+	   cout<<"8.adicionar venta ";
+	   cout<<"9.modificar venta ";
+	   cout<<"10.eliminar  venta ";
+	   cout<<"0.salir";
+	   cout<<"Seleccione una opcion: ";
+	   cin>>opcion;
+	   switch(opcion);
+	   {
+	      case 1 : crear_producto();
+				 break;
+		  case 2: 
+			 mostrar_producto();
+			 break;
+		  case 3: 
+			 adicionar_producto();
+			 break;
+		  case 4: 
+			 adicionar_producto();
+			 break;
+		  case 5: 
+			 eliminar_producto();
+			 break;
+
+		  case 6: 
+			 crear_venta();
+			 break;
+		  case 7: 
+			 mostrar_venta();
+			 break;
+		  case 8: 
+			 adicionar_venta();
+			 break;
+		   case 9: 
+			 adicionar_venta();
+			 break;
+		   case  10: 
+			 eliminar_venta();
+			 break;
+
+        }
+	}while(opcion!=0);
+}
+
+void crear_producto()
+ {
+	 FILE *alias;
+	 alias=fopen("producto.dat","wb");
+	 fclose(alias);
+ }
+
+
+void mostrar_producto()
+{
+	FILE *alias;
+	producto reg;
+    alias=fopen("producto.dat","rb");
+	if(alias==NULL)
+	{
+		cout<<"\nel archivo no existe:";
+
+	}
+	fread(&reg,sizeof(reg),1,alias); 
+	while(!feof(alias))
+	 {
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.precio<<"  "<<reg.descripcion;
+	     fread(&reg,sizeof(reg),1,alias); 
+	}
+	cout<<"\nfin del listado:";
+	fclose(alias);
+}
+ 
+void adicionar_producto()
+{ 
+	FILE *alias;
+	producto reg;
+
+	alias=fopen("producto.dat","ab");
+	if(alias==NULL)
+	{ 
+		cout<<"\nel archivo no existe:";
+
+	}
+	else 
+	{
+		cout<<"\nintroducin id_producto:";
+		cin>>reg.id_prod;
+		cout<<"\nintroducir precio:";
+		cin>>reg.precio;
+		cout<<"\nintruducir descripcion:";
+		getline(cin,reg.descripcion);
+
+	    reg.estado='s';
+		fwrite(&reg,sizeof(reg),1,alias);
+
+	}
+	
+ fclose(alias);
+}
+ void modificar_producto()
+ {  
+	 FILE *alias;
+	 producto reg;
+	 int n;
+	 alias=fopen("producto.dat","r+b");
+	 fread(&reg,sizeof(reg),1,alias);
+     while(!feof(alias));
+	 { 
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.precio<<"  "<<reg.descripcion;
+	     fread(&reg,sizeof(reg),1,alias); 
+		
+	 }
+	 rewind(alias);
+	 cout<<"\nque registro decea modificar?";
+	 cin>>n;
+	 fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	 fread(&reg,sizeof(reg),1,alias);
+	    cout<<"\nintroducin id_producto:";
+		cin>>reg.id_prod;
+		cout<<"\nintroducir precio:";
+		cin>>reg.precio;
+		cout<<"\nintruducir descripcion:";
+		getline(cin,reg.descripcion);
+	  fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	  fwrite(&reg,sizeof(reg),1,alias);
+	  fclose(alias);
+
+ }
+ void eliminar_producto()
+ {
+	 FILE *alias;
+	 producto reg;
+	 int n;
+	 alias=fopen("producto.dat","r+b");
+	 fread(&reg,sizeof(reg),1,alias);
+	 if(alias==NULL)
+	 {
+		 cout<<"\nel archivo no existe:";
+
+	 }
+	 else 
+	 { 
+       fread(&reg,sizeof(reg),1,alias);
+        while(!feof(alias));
+	   { 
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.precio<<"  "<<reg.descripcion;
+	     fread(&reg,sizeof(reg),1,alias); 
+		
+	    }
+	 rewind(alias);
+	 cout<<"\nque registro decea eliminar?";
+	 cin>>n;
+	 fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	 fread(&reg,sizeof(reg),1,alias);
+	  reg.estado='n';
+	  cout<<"\nel registro ha sido eliminado:";
+	  fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	  fwrite(&reg,sizeof(reg),1,alias);
+	 }
+	  fclose(alias);
+	 
+}
+
+
+ void crear_venta()
+ {
+	 FILE *alias;
+	 alias=fopen("venta.dat","wb");
+	 fclose(alias);
+ }
+
+
+void mostrar_venta()
+{
+	FILE *alias;
+	venta reg;
+	
+    alias=fopen("venta.dat","rb");
+	if(alias==NULL)
+	{
+		cout<<"\nel archivo no existe:";
+
+	}
+	fread(&reg,sizeof(reg),1,alias); 
+	while(!feof(alias))
+	 {
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.fecha<<"  "<<reg.cantidad;
+	     fread(&reg,sizeof(reg),1,alias); 
+	}
+	cout<<"\nfin del listado:";
+	fclose(alias);
+}
+ 
+void adicionar_venta()
+{ 
+	FILE *alias;
+	venta reg;
+
+	alias=fopen("venta.dat","ab");
+	if(alias==NULL)
+	{ 
+		cout<<"\nel archivo no existe:";
+
+	}
+	else 
+	{
+		cout<<"\nintroducin id_producto:";
+		cin>>reg.id_prod;
+		cout<<"\nintroducir fecha:";
+		getline(cin,reg.fecha);
+		cout<<"\nintruducir descripcion:";
+		cin>>reg.cantidad;
+
+	    reg.estado='s';
+		fwrite(&reg,sizeof(reg),1,alias);
+
+	}
+	
+ fclose(alias);
+}
+ void modificar_venta()
+ {  
+	 FILE *alias;
+	 venta reg;
+	 int n;
+	 alias=fopen("venta.dat","r+b");
+	 fread(&reg,sizeof(reg),1,alias);
+     while(!feof(alias));
+	 { 
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.fecha<<"  "<<reg.cantidad ;
+	     fread(&reg,sizeof(reg),1,alias); 
+		
+	 }
+	 rewind(alias);
+	 cout<<"\nque registro decea modificar?";
+	 cin>>n;
+	 fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	 fread(&reg,sizeof(reg),1,alias);
+	    cout<<"\nintroducin id_producto:";
+		cin>>reg.id_prod;
+		cout<<"\nintroducir fecha:";
+		getline(cin,reg.fecha);
+		cout<<"\nintruducir cantidad :";
+		cin>>reg.cantidad;
+	  fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	  fwrite(&reg,sizeof(reg),1,alias);
+	  fclose(alias);
+
+ }
+ void eliminar_venta()
+ {
+	 FILE *alias;
+	 venta reg;
+	 int n;
+	 alias=fopen("venta.dat","r+b");
+	 fread(&reg,sizeof(reg),1,alias);
+	 if(alias==NULL)
+	 {
+		 cout<<"\nel archivo no existe:";
+
+	 }
+	 else 
+	 { 
+       fread(&reg,sizeof(reg),1,alias);
+        while(!feof(alias));
+	   { 
+		 if(reg.estado =='s')
+		 cout<<reg.id_prod<<"  "<<reg.fecha <<"  "<<reg.cantidad;
+	     fread(&reg,sizeof(reg),1,alias); 
+		
+	    }
+	 rewind(alias);
+	 cout<<"\nque registro decea eliminar?";
+	 cin>>n;
+	 fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	 fread(&reg,sizeof(reg),1,alias);
+	  reg.estado='n';
+	  cout<<"\nel registro ha sido eliminado:";
+	  fseek(alias,(n-1)*sizeof(reg),SEEK_SET);
+	  fwrite(&reg,sizeof(reg),1,alias);
+	 }
+	  fclose(alias);
+	 
+}
